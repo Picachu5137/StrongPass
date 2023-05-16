@@ -18,7 +18,8 @@ class window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_4.setText('sss')
         self.label_3.setHidden(True)
         self.label_4.setHidden(True)
-
+        
+    # generating the password and displaying it in "length"
     def gen_pass(self):
         print('clicked!!')
         length = self.length.text()
@@ -41,7 +42,8 @@ class window(QtWidgets.QMainWindow, Ui_MainWindow):
         password = gen.pass_gen(int(length), *dict_param)
         print(f'{password= }')
         self.pass_input.setText(password)
-
+    
+    # password check and output of the result
     def text_changed(self):
         easterEggs = {'qwertyuiop1': 'есть что-либо надёжнее?',
                       'pupa': 'lupa', 'ping': 'pong', 'fl0ppa': 'pelmeni'
@@ -66,7 +68,8 @@ class window(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.label_4.setText('пароль нормальный')
                 else:
                     self.label_4.setText('пароль сильный')
-
+    
+    # copy password to clipboard
     def copy_text(self):
         text = self.pass_input.text()
         print(text)
