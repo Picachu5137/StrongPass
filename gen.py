@@ -5,19 +5,20 @@ from random import choice
 def pass_gen(length: int, *dic_param: int) -> str:
     """make password
 
-    param:
-        length (int): length of pass
-        dic_param (int): args separated by commas : 0 - ascii_lowercase, 1 - ascii_uppercase, 2 - digits, 3 - punctuation, 4 - space
-    return:
+    :param length: length of pass
+    :param dic_param: args separated by commas : 0 - ascii_lowercase, 1 - ascii_uppercase, 2 - digits, 3 - punctuation, 4 - space
+    :return:
         out (str): str of characters from the specified dictionary
     """
 
+    # generating a dictionary for creating a password
     dic = []
     strings = [string.ascii_lowercase, string.ascii_uppercase, string.digits, string.punctuation,
                ' ']
     for i in set(dic_param):
         dic.extend(strings[i])
 
+    # password generation
     out = ""
     for i in range(length):
         char = choice(dic)
@@ -29,10 +30,8 @@ def pass_gen(length: int, *dic_param: int) -> str:
 def pass_check(pw: str) -> int:
     """check password strength
 
-    param:
-        pw (str): password
-    return:
-        strength (int): strength of password from 0 to 9
+    :param: pw (str) password
+    :return: strength (int): strength of password
     """
 
     strength = 0
