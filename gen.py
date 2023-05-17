@@ -1,5 +1,5 @@
 import string
-from random import choice
+from random import choices
 
 
 def pass_gen(length: int, *dic_param: int) -> str:
@@ -7,49 +7,62 @@ def pass_gen(length: int, *dic_param: int) -> str:
 
     :param length: length of pass
     :param dic_param: args separated by commas : 0 - ascii_lowercase, 1 - ascii_uppercase, 2 - digits, 3 - punctuation, 4 - space
-    :return:
-        out (str): str of characters from the specified dictionary
+    :return: out (str): str of characters from the specified dictionary
     """
 
     # generating a dictionary for creating a password
     dic = []
-    strings = [string.ascii_lowercase, string.ascii_uppercase, string.digits, string.punctuation,
-               ' ']
+    strings = [string.ascii_lowercase, string.ascii_uppercase, string.digits, string.punctuation, ' ']
     for i in set(dic_param):
         dic.extend(strings[i])
 
     # password generation
-    out = ""
-    for i in range(length):
-        char = choice(dic)
-        out = out + char
-        # print(f'{char=}')
+    out = "".join(choices(dic, k=length))
     return out
 
 
-def pass_check(pw: str) -> int:
+def is_common(password: str) -> int:
+    """password check for simplicity
+
+    :param password: the string that contains the password
+    :return: return 0 if the password in the list of popular passwords
+    """
+    try:
+        file = open('common.txt', 'r')
+    except OSError:
+        return 0
+
+    with file as f:
+        common = f.read().splitlines()
+        if password in common:
+            return 1  # pw was found in common passwords
+
+
+def pass_check(password: str) -> int:
     """check password strength
+
+    if password in common passwords return 0
 
     :param: pw (str) password
     :return: strength (int): strength of password
     """
 
+    # if password in common passwords return 0
+    if is_common(password):
+        return 0
+
     strength = 0
 
-    with open('common.txt', 'r') as f:
-        common = f.read().splitlines()
-    if pw in common:
-        return 0  # pw was found in common passwords
-
-    lowercase = any([1 for i in pw if i in string.ascii_lowercase])
-    uppercase = any([1 for i in pw if i in string.ascii_uppercase])
-    digits = any([1 for i in pw if i in string.digits])
-    punctuation = any([1 for i in pw if i in string.punctuation])
-    space = any([1 for i in pw if i == ' '])
+    lowercase = any([1 for i in password if i.islower()])
+    uppercase = any([1 for i in password if i.isupper()])
+    digits = any([1 for i in password if i.isdigit()])
+    punctuation = any(
+        [1 for i in password if i in string.punctuation])  # the str class doesn't have a built-in ispunctuation method
+    space = any([1 for i in password if i.isspace()])
 
     char = [lowercase, uppercase, digits, punctuation, space]
 
-    pw_length = len(pw)
+    pw_length = len(password)
     char_length = char.count(True)
     strength += (pw_length - 1) // 4
     strength += char_length - 1
