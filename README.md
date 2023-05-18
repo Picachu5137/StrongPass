@@ -3,7 +3,7 @@ Project created as a computer science project work
 
 # Program usage:
 
-![program](https://imgur.com/a/XBH8zwK)
+![program](https://i.imgur.com/WlryB1g.png)
 
 1. Selecting characters for the password.
 2. Сharacter count.
