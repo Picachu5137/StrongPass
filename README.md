@@ -1,4 +1,4 @@
-# StrongPass
+# CryptArmor
 Project created as a computer science project work
 
 # Program usage:
